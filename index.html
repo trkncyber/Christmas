@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SantaCart | Christmas Gifts</title>
+    <meta
+      name="description"
+      content="A festive Christmas gifts storefront with curated holiday inspiration, gift ideas, and special seasonal deals."
+    />
+    <style>
+      :root {
+        --bg: #120f1d;
+        --bg-soft: #1b1527;
+        --card: rgba(255, 255, 255, 0.05);
+        --card-strong: rgba(255, 255, 255, 0.08);
+        --text: #f7f7fb;
+        --muted: #d9d3e8;
+        --primary: #ff5f6d;
+        --primary-2: #ffc371;
+        --green: #63d9a2;
+        --gold: #f7d77a;
+        --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(255,95,109,0.18), transparent 28%),
+          radial-gradient(circle at top right, rgba(247,214,123,0.14), transparent 26%),
+          linear-gradient(180deg, var(--bg), var(--bg-soft));
+        color: var(--text);
+      }
+
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
+      button, input { font: inherit; }
+
+      .container {
+        width: min(1200px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(18, 15, 29, 0.72);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 0;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        color: var(--muted);
+      }
+
+      .nav-links a:hover { color: var(--text); }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 10px 18px;
+        border: 1px solid rgba(255,255,255,0.12);
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .pill:hover { transform: translateY(-1px); }
+
+      .pill.primary {
+        border: none;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        color: white;
+        box-shadow: 0 12px 28px rgba(255,95,109,0.35);
+      }
+
+      .pill.ghost {
+        background: rgba(255,255,255,0.02);
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 64px 0 32px;
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 26px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 18px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.04);
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0 0 18px;
+        font-size: clamp(2.7rem, 5vw, 5rem);
+        line-height: 0.95;
+        letter-spacing: -0.06em;
+      }
+
+      .highlight {
+        background: linear-gradient(135deg, var(--gold), #ff9d7f);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero p {
+        margin: 0 0 26px;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 1.08rem;
+        max-width: 620px;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .stat {
+        min-width: 140px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.7rem;
+        margin-bottom: 4px;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .hero-visual {
+        position: relative;
+        display: grid;
+        place-items: center;
+        min-height: 560px;
+      }
+
+      .gift-box {
+        position: relative;
+        width: min(420px, 85%);
+        aspect-ratio: 1;
+        background: linear-gradient(180deg, #261737, #1a1224);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 32px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .gift-box::before,
+      .gift-box::after {
+        content: "";
+        position: absolute;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        border-radius: 18px;
+      }
+
+      .gift-box::before {
+        width: 68%;
+        height: 22px;
+        left: 16%;
+        top: 48%;
+        box-shadow: 0 0 0 10px rgba(255,255,255,0.04);
+      }
+
+      .gift-box::after {
+        width: 22px;
+        height: 68%;
+        left: 48%;
+        top: 16%;
+      }
+
+      .gift-card {
+        position: absolute;
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: var(--shadow);
+      }
+
+      .gift-card.one {
+        width: 120px; height: 120px; left: 16%; top: 12%;
+        background: linear-gradient(135deg, rgba(255,95,109,0.92), rgba(255,188,150,0.76));
+      }
+
+      .gift-card.two {
+        width: 132px; height: 132px; right: 10%; bottom: 18%;
+        background: linear-gradient(135deg, rgba(99,217,162,0.89), rgba(115,212,255,0.75));
+      }
+
+      .gift-card.three {
+        width: 90px; height: 90px; left: 18%; bottom: 14%;
+        background: linear-gradient(135deg, rgba(247,215,122,0.92), rgba(255,157,127,0.9));
+      }
+
+      .gift-card.four {
+        width: 108px; height: 108px; right: 20%; top: 20%;
+        background: linear-gradient(135deg, rgba(111,119,255,0.82), rgba(161,123,255,0.72));
+      }
+
+      .mini-tag {
+        position: absolute;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(18,15,29,0.8);
+        font-size: 12px;
+        font-weight: 700;
+        box-shadow: var(--shadow);
+      }
+
+      .mini-tag.a { left: 12%; top: 12%; }
+      .mini-tag.b { right: 9%; bottom: 10%; }
+      .mini-tag.c { left: 18%; bottom: 8%; }
+
+      section {
+        padding: 32px 0;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(1.8rem, 2vw, 2.7rem);
+        letter-spacing: -0.04em;
+      }
+
+      .section-sub {
+        color: var(--muted);
+        max-width: 600px;
+        line-height: 1.7;
+      }
+
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .filter-btn {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: var(--text);
+        border-radius: 999px;
+        padding: 10px 18px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        border-color: transparent;
+      }
+
+      .products {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .product-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .product-image {
+        position: relative;
+        height: 240px;
+        overflow: hidden;
+      }
+
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .product-card:hover .product-image img {
+        transform: scale(1.04);
+      }
+
+      .badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 8px 10px;
+        background: rgba(18,15,29,0.7);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .product-body {
+        padding: 16px;
+      }
+
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .tag {
+        padding: 6px 9px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .price {
+        color: var(--gold);
+        font-weight: 800;
+      }
+
+      .product-name {
+        margin: 0 0 10px;
+        font-size: 1.1rem;
+      }
+
+      .product-desc {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        min-height: 52px;
+      }
+
+      .card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .star-row { color: #ffd166; letter-spacing: 0.08em; font-size: 0.9rem; }
+
+      .add-cart {
+        appearance: none;
+        border: none;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        color: white;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .feature-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 24px 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(255,95,109,0.2), rgba(247,214,123,0.2));
+        font-size: 1.5rem;
+        margin-bottom: 16px;
+      }
+
+      .feature-card h3 {
+        margin: 0 0 10px;
+        font-size: 1.18rem;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .gift-guide {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .guide-panel {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .guide-visual {
+        min-height: 320px;
+        background:
+          linear-gradient(135deg, rgba(255,95,109,0.25), rgba(255,191,143,0.1)),
+          url("https://images.unsplash.com/photo-1512389142860-2491268d5e3b?auto=format&fit=crop&w=1000&q=80") center/cover no-repeat;
+      }
+
+      .guide-content {
+        padding: 26px 22px;
+      }
+
+      .countdown-box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .time-block {
+        flex: 1 1 90px;
+        padding: 18px 12px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        text-align: center;
+      }
+
+      .time-block strong {
+        display: block;
+        font-size: 2rem;
+        letter-spacing: -0.05em;
+      }
+
+      .time-block span {
+        color: var(--muted);
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .steps {
+        display: grid;
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 14px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 18px;
+        padding: 16px 18px;
+      }
+
+      .step-num {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--green), #8fe0bf);
+        color: #102018;
+        font-weight: 800;
+      }
+
+      .step h4 {
+        margin: 0 0 6px;
+        font-size: 1.05rem;
+      }
+
+      .step p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .newsletter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 28px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, rgba(255,95,109,0.18), rgba(247,214,123,0.15));
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: var(--shadow);
+      }
+
+      .newsletter h3 {
+        margin: 0 0 8px;
+        font-size: clamp(1.5rem, 2vw, 2.4rem);
+        letter-spacing: -0.04em;
+      }
+
+      .newsletter p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .subscribe {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: min(100%, 420px);
+        padding: 8px 8px 8px 18px;
+        background: rgba(17, 11, 25, 0.45);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 999px;
+      }
+
+      .subscribe input {
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: var(--text);
+      }
+
+      .subscribe input::placeholder { color: rgba(255,255,255,0.5); }
+
+      footer {
+        padding: 30px 0 60px;
+        color: var(--muted);
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding-top: 22px;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      @media (max-width: 980px) {
+        .hero-inner,
+        .gift-guide,
+        .newsletter {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+
+        .products {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .nav {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .nav-links {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .nav-actions {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .products {
+          grid-template-columns: 1fr;
+        }
+
+        .cta-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .pill {
+          width: 100%;
+        }
+
+        .subscribe {
+          width: 100%;
+          min-width: auto;
+          flex-wrap: wrap;
+          border-radius: 18px;
+          padding: 12px 14px;
+        }
+
+        .subscribe input {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="logo">
+          <div class="logo-mark">✦</div>
+          <span>SantaCart</span>
+        </div>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#shop">Shop</a>
+          <a href="#gift-guide">Gift Guide</a>
+          <a href="#features">Why us</a>
+          <a href="#reviews">Reviews</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="pill ghost">Search</button>
+          <button class="pill primary">Cart (<span id="cart-count">0</span>)</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div>
+            <span class="eyebrow">Christmas magic delivered</span>
+            <h1>Make this <span class="highlight">Christmas</span> unforgettable.</h1>
+            <p>
+              Discover joyful gifts for everyone you love — from cozy keepsakes and thoughtful classics to festive surprises that bring a smile to every face.
+            </p>
+
+            <div class="cta-row">
+              <a href="#shop" class="pill primary">Shop gifts</a>
+              <a href="#gift-guide" class="pill ghost">Gift ideas</a>
+            </div>
+
+            <div class="stats">
+              <div class="stat">
+                <strong>2.5k+</strong>
+                <span>Curated gifts</span>
+              </div>
+              <div class="stat">
+                <strong>4.9/5</strong>
+                <span>Happy shoppers</span>
+              </div>
+              <div class="stat">
+                <strong>Free</strong>
+                <span>Shipping over $50</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Christmas gift illustration">
+            <div class="gift-box">
+              <div class="gift-card one"></div>
+              <div class="gift-card two"></div>
+              <div class="gift-card three"></div>
+              <div class="gift-card four"></div>
+
+              <div class="mini-tag a">🎁 Gift set</div>
+              <div class="mini-tag b">✨ Merry</div>
+              <div class="mini-tag c">Warm wishes</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="shop">
+        <div class="container">
+          <div class="section-head">
+            <h2>Best Christmas picks</h2>
+            <div class="section-sub">
+              Thoughtful presents for every kind of celebration — from cozy nights in to grand festive gatherings.
+            </div>
+          </div>
+
+          <div class="filter-row" aria-label="Product filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="for-her">For Her</button>
+            <button class="filter-btn" data-filter="for-him">For Him</button>
+            <button class="filter-btn" data-filter="home">Home</button>
+            <button class="filter-btn" data-filter="family">Family</button>
+          </div>
+
+          <div class="products">
+            <article class="product-card" data-category="for-her">
+              <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Holiday candle set" />
+                <span class="badge">Best seller</span>
+              </div>
+              <div class="product-body">
+                <div class="meta">
+                  <span class="tag">For Her</span>
+                  <span class="price">$32</span>
+                </div>
+                <h3 class="product-name">Holiday Glow Candle Set</h3>
+                <p class="product-desc">A calming candle trio with warm vanilla and pine notes for cozy winter evenings.</p>
+                <div class="card-actions">
+                  <span class="star-row">★★★★★</span>
+                  <button class="add-cart">Add to cart</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-category="for-him">
+              <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80" alt="Wireless speaker gift" />
+                <span class="badge">New</span>
+              </div>
+              <div class="product-body">
+                <div class="meta">
+                  <span class="tag">For Him</span>
+                  <span class="price">$49</span>
+                </div>
+                <h3 class="product-name">Wireless Audio Speaker</h3>
+                <p class="product-desc">Portable sound with deep bass and a sleek finish for music lovers and busy mornings.</p>
+                <div class="card-actions">
+                  <span class="star-row">★★★★★</span>
+                  <button class="add-cart">Add to cart</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-category="home">
+              <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Winter comfort throw" />
+                <span class="badge">Cozy pick</span>
+              </div>
+              <div class="product-body">
+                <div class="meta">
+                  <span class="tag">Home</span>
+                  <span class="price">$58</span>
+                </div>
+                <h3 class="product-name">Winter Comfort Throw</h3>
+                <p class="product-desc">A plush blanket in rich seasonal tones to warm up every room and every evening.</p>
+                <div class="card-actions">
+                  <span class="star-row">★★★★★</span>
+                  <button class="add-cart">Add to cart</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-category="family">
+              <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" alt="Family game night box" />
+                <span class="badge">Family fun</span>
+              </div>
+              <div class="product-body">
+                <div class="meta">
+                  <span class="tag">Family</span>
+                  <span class="price">$26</span>
+                </div>
+                <h3 class="product-name">Holiday Game Night Box</h3>
+                <p class="product-desc">A playful collection of festive games that brings laughter and connection to the table.</p>
+                <div class="card-actions">
+                  <span class="star-row">★★★★★</span>
+                  <button class="add-cart">Add to cart</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="features">
+        <div class="container">
+          <div class="section-head">
+            <h2>Why people love SantaCart</h2>
+            <div class="section-sub">
+              We make gifting easier with thoughtfully chosen items, premium packaging,
+              and festive service.
+            </div>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">🎄</div>
+              <h3>Curated gifts</h3>
+              <p>Each product is chosen for quality, emotional value, and the feeling of a truly personal gift.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">📦</div>
+              <h3>Beautiful packaging</h3>
+              <p>Every order arrives wrapped with festive care, ready to delight the recipient at first glance.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🚚</div>
+              <h3>Fast delivery</h3>
+              <p>Get holiday finds on time with priority shipping and careful handling from our warehouse.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gift-guide">
+        <div class="container gift-guide">
+          <div class="guide-panel">
+            <div class="guide-visual"></div>
+          </div>
+
+          <div class="guide-panel">
+            <div class="guide-content">
+              <span class="eyebrow">Gift guide</span>
+              <h2>How to choose the perfect present</h2>
+
+              <div class="countdown-box" aria-label="Christmas countdown">
+                <div class="time-block">
+                  <strong id="days">00</strong>
+                  <span>Days</span>
+                </div>
+                <div class="time-block">
+                  <strong id="hours">00</strong>
+                  <span>Hours</span>
+                </div>
+                <div class="time-block">
+                  <strong id="minutes">00</strong>
+                  <span>Minutes</span>
+                </div>
+                <div class="time-block">
+                  <strong id="seconds">00</strong>
+                  <span>Seconds</span>
+                </div>
+              </div>
+
+              <div class="steps">
+                <div class="step">
+                  <div class="step-num">1</div>
+                  <div>
+                    <h4>Pick a mood</h4>
+                    <p>Choose gifts based on personality: cozy, luxurious, playful, or practical.</p>
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-num">2</div>
+                  <div>
+                    <h4>Match the occasion</h4>
+                    <p>Think about the moment — a family night, a thank-you, or a little surprise.</p>
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-num">3</div>
+                  <div>
+                    <h4>Add a personal touch</h4>
+                    <p>Include a handwritten note or a favorite scent, color, or hobby to make it special.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews">
+        <div class="container">
+          <div class="section-head">
+            <h2>What our customers say</h2>
+            <div class="section-sub">Every order is packed with care and joy, just like the gift itself.</div>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">💬</div>
+              <h3>“Amazing quality”</h3>
+              <p>“Everything arrived beautifully wrapped and looked even better in person. My sister loved it.”</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🎁</div>
+              <h3>“Perfect for gifting”</h3>
+              <p>“The packaging, the smell, and the design were all excellent. It felt premium from start to finish.”</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">✨</div>
+              <h3>“A Christmas favorite”</h3>
+              <p>“We’ve ordered twice already. It’s become our go-to for holiday gifts and family surprises.”</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="newsletter">
+            <div>
+              <h3>Get festive deals in your inbox</h3>
+              <p>Exclusive holiday bundles, early offers, and gift inspiration delivered weekly.</p>
+            </div>
+
+            <form class="subscribe" onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
+              <input type="email" placeholder="Your email address" aria-label="Email address" />
+              <button type="submit" class="pill primary">Join now</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <div class="logo">
+          <div class="logo-mark">✦</div>
+          <span>SantaCart</span>
+        </div>
+
+        <div class="footer-links">
+          <a href="#shop">Shop</a>
+          <a href="#gift-guide">Gift guide</a>
+          <a href="#features">Features</a>
+          <a href="#reviews">Reviews</a>
+        </div>
+
+        <div>© 2026 SantaCart</div>
+      </div>
+    </footer>
+
+    <script>
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const cards = document.querySelectorAll(".product-card");
+
+      filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+          filterButtons.forEach(btn => btn.classList.remove("active"));
+          button.classList.add("active");
+
+          const selected = button.dataset.filter;
+
+          cards.forEach(card => {
+            const category = card.dataset.category;
+            const shouldShow = selected === "all" || selected === category;
+            card.style.display = shouldShow ? "block" : "none";
+          });
+        });
+      });
+
+      const cartCountEl = document.getElementById("cart-count");
+      let cartCount = 0;
+
+      document.querySelectorAll(".add-cart").forEach(button => {
+        button.addEventListener("click", () => {
+          cartCount += 1;
+          cartCountEl.textContent = cartCount;
+          button.textContent = "Added";
+          button.disabled = true;
+
+          setTimeout(() => {
+            button.textContent = "Add to cart";
+            button.disabled = false;
+          }, 900);
+        });
+      });
+
+      const christmasDate = new Date("Dec 25, 2026 00:00:00").getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = christmasDate - now;
+
+        if (diff <= 0) {
+          document.getElementById("days").textContent = "00";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("days").textContent = String(days).padStart(2, "0");
+        document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
